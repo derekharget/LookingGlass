@@ -1,7 +1,7 @@
 import {URL} from 'url';
 
 
-class Validation {
+export class Validation {
 
     private isIp = require('is-ip');
     private validateDomain = require('is-valid-domain');
@@ -9,26 +9,28 @@ class Validation {
     constructor(private target: string) {
     }
 
-    //Check if IP is valid v4 or v6
 
-    public validIP(): boolean {
-
-        return this.isIp(this.target);
-    };
-
-
-    public validateAndReturnDomain(): boolean;
-    public validateAndReturnDomain(): string;
-    public validateAndReturnDomain(): any {
+    public validateAndReturn(): boolean;
+    public validateAndReturn(): string;
+    public validateAndReturn(): any {
 
         if (this.validDomain()) {
             return this.stripDomainData();
+        }
+
+        if(this.validIP()) {
+            return this.target;
         }
 
         return false;
 
     }
 
+
+    //Check if IP is valid v4 or v6
+    private validIP(): boolean {
+        return this.isIp(this.target);
+    };
 
     // Check if domain is valid
     private validDomain(): boolean {
@@ -49,7 +51,7 @@ class Validation {
 
 // Passing Hostname
 // const val = new Validation('http://www.google.com/sdfasd/sadf');
-// console.log(val.validateAndReturnDomain());
+// console.log(val.validateAndReturn());
 
 // Passing IPv4
 // const val = new Validation('8.8.8.8');
