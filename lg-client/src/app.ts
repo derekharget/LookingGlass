@@ -1,10 +1,10 @@
 import express, {Application, Request, Response, NextFunction} from 'express';
 import bodyParser from 'body-parser';
-import {Routes} from "./api/route";
+import {Routing} from "./core/routing.class";
 
 class App {
     public app: Application;
-    public routes: Routes = new Routes();
+    public routes: Routing = new Routing();
 
     constructor() {
         this.app = express();
