@@ -45,6 +45,7 @@ export class Validation {
 
 }
 
+
 // Failing Hostname
 // const val = new Validation('http://wwwm/sdfasd/sadf');
 // console.log(val.validateAndReturnDomain());
