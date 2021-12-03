@@ -6,20 +6,16 @@ export class Validation {
     private isIp = require('is-ip');
     private validateDomain = require('is-valid-domain');
 
-    constructor(private target: string) {
-    }
+    public validateAndReturn(target: string): boolean;
+    public validateAndReturn(target: string): string;
+    public validateAndReturn(target: string): any {
 
-
-    public validateAndReturn(): boolean;
-    public validateAndReturn(): string;
-    public validateAndReturn(): any {
-
-        if (this.validDomain()) {
-            return this.stripDomainData();
+        if (this.validDomain(target)) {
+            return target;
         }
 
-        if(this.validIP()) {
-            return this.target;
+        if(this.validIP(target)) {
+            return target;
         }
 
         return false;
@@ -28,42 +24,15 @@ export class Validation {
 
 
     //Check if IP is valid v4 or v6
-    private validIP(): boolean {
-        return this.isIp(this.target);
+    private validIP(target: string): boolean {
+        return this.isIp(target);
     };
 
     // Check if domain is valid
-    private validDomain(): boolean {
-        return this.validateDomain(this.stripDomainData());
+    private validDomain(target: string): boolean {
+        return this.validateDomain(target);
     }
 
-
-    private stripDomainData(): string {
-        const {hostname} = new URL(this.target)
-        return hostname;
-    }
 
 }
-
-
-// Failing Hostname
-// const val = new Validation('http://wwwm/sdfasd/sadf');
-// console.log(val.validateAndReturnDomain());
-
-// Passing Hostname
-// const val = new Validation('http://www.google.com/sdfasd/sadf');
-// console.log(val.validateAndReturn());
-
-// Passing IPv4
-// const val = new Validation('8.8.8.8');
-// console.log(val.validIP());
-
-// Passing IPv6
-// const val = new Validation('da5a:efb2:3a6d::cafb:85c8');
-// console.log(val.validIP());
-
-// Failing ipv6
-// const val = new Validation('da5a:efb2:3a6d::g');
-// console.log(val.validIP());
-
 

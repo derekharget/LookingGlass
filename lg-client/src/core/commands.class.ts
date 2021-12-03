@@ -2,35 +2,38 @@ import shell = require('shelljs');
 import {Validation} from './validation.class';
 
 export class Commands {
-    private validator: Validation;
 
-    constructor(private target: string) {
-        this.validator = new Validation(target);
-    }
 
-    public async ping4(): Promise<string | boolean> {
-        const host = this.validator.validateAndReturn();
+    public async ping4(target: string): Promise<string | boolean> {
+        const validator = new Validation();
 
-        if (!host) return false;
-
-        const cmd = `ping ${host}`;
-
-        return await shell.exec(cmd).stdout.toString();
-
-    }
-
-    public async ping6(): Promise<string | boolean> {
-        const host = this.validator.validateAndReturn();
+        const host = validator.validateAndReturn(target);
 
         if (!host) return false;
 
         const cmd = `ping -c 10 -w15 ${host}`;
 
         return await shell.exec(cmd).stdout.toString();
+
     }
 
-    public async mtr4(): Promise<string|boolean> {
-        const host = this.validator.validateAndReturn();
+    public async ping6(target: string): Promise<string | boolean> {
+        const validator = new Validation();
+
+        const host = validator.validateAndReturn(target);
+
+        if (!host) return false;
+
+        const cmd = `ping6 -c 10 -w15 ${host}`;
+
+        return await shell.exec(cmd).stdout.toString();
+    }
+
+
+    public async mtr4(target: string): Promise<string|boolean> {
+        const validator = new Validation();
+
+        const host = validator.validateAndReturn(target);
 
         if (!host) return false;
 
@@ -40,8 +43,10 @@ export class Commands {
     }
 
 
-    public async mtr6(): Promise<string|boolean> {
-        const host = this.validator.validateAndReturn();
+    public async mtr6(target: string): Promise<string|boolean> {
+        const validator = new Validation();
+
+        const host = validator.validateAndReturn(target);
 
         if (!host) return false;
 
@@ -50,8 +55,10 @@ export class Commands {
         return await shell.exec(cmd).stdout.toString();
     }
 
-    public async traceroute4(): Promise<string | boolean> {
-        const host = this.validator.validateAndReturn();
+    public async traceroute4(target: string): Promise<string | boolean> {
+        const validator = new Validation();
+
+        const host = validator.validateAndReturn(target);
 
         if (!host) return false;
 
@@ -61,8 +68,10 @@ export class Commands {
     }
 
 
-    public async traceroute6(): Promise<string | boolean> {
-        const host = this.validator.validateAndReturn();
+    public async traceroute6(target: string): Promise<string | boolean> {
+        const validator = new Validation();
+
+        const host = validator.validateAndReturn(target);
 
         if (!host) return false;
 
@@ -73,7 +82,3 @@ export class Commands {
     }
 
 }
-
-const cc = new Commands('https://google.com');
-
-console.log(cc.ping4());
