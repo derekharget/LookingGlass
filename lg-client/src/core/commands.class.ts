@@ -62,7 +62,7 @@ export class Commands {
 
         if (!host) return false;
 
-        const cmd = `traceroute -4 -w2 ${host}`;
+        const cmd = `traceroute -w2 ${host}`;
 
         return await shell.exec(cmd).stdout.toString();
     }
@@ -75,7 +75,7 @@ export class Commands {
 
         if (!host) return false;
 
-        const cmd = `traceroute -6 -w2 ${host}`;
+        const cmd = `traceroute6 -w2 ${host}`;
 
         return await shell.exec(cmd).stdout.toString();
 
