@@ -16,7 +16,8 @@ class App {
     private config(): void {
         this.app.use((req: Request, res: Response, next: NextFunction) => {
             res.header('Access-Control-Allow-Origin', '*');
-            res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT');
+            res.header('Access-Control-Allow-Methods', 'POST');
+            // res.header('Access-Control-Allow-Methods', 'GET,POST,DELETE,OPTIONS,PUT');
             res.header('Access-Control-Allow-Headers', '*');
             next();
         });
