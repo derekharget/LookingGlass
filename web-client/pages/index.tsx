@@ -1,7 +1,7 @@
+import * as React from 'react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
-// eslint-disable-next-line no-use-before-define
-import React from 'react';
+import LocationBar from '../src/components/location-bar/location-bar';
 
 const Home: NextPage = () => {
   return (
@@ -12,7 +12,10 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <p>Hello</p>
+        <p>dfgsdfg</p>
+
+
+        <LocationBar />
     </>
   );
 };
