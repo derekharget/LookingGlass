@@ -18,6 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import React from 'react';
 import getUsersIPFN from '../../helpers/get-users-ip';
+import locations from '../../locations';
 
 const InputContainer = styled('div')({
     backgroundColor: 'white',
@@ -61,15 +62,13 @@ export default function InputSelector() {
 
     const [open, setOpen] = React.useState<boolean>(false);
     const anchorRef = React.useRef<HTMLDivElement>(null);
-    const [selectedIndex, setSelectedIndex] = React.useState<number>(1);
-
-    const options = ['Chicago, Illinois', 'LA, California', 'NYC, New York'];
+    const [selectedLocation, setSelectedLocation] = React.useState<number>(0);
 
     const handleMenuItemClick = (
         _event: React.MouseEvent<HTMLLIElement, MouseEvent>,
         index: number
     ) => {
-        setSelectedIndex(index);
+        setSelectedLocation(index);
         setOpen(false);
     };
 
@@ -155,7 +154,7 @@ export default function InputSelector() {
                                 aria-label="split button"
                             >
                                 <Button onClick={() => handleToggle()}>
-                                    {options[selectedIndex]}
+                                    {`${locations[selectedLocation].city}, ${locations[selectedLocation].state}`}
                                 </Button>
                                 <Button size="small" onClick={handleToggle}>
                                     <ArrowDropDownIcon />
@@ -183,13 +182,13 @@ export default function InputSelector() {
                                                 onClickAway={handleClose}
                                             >
                                                 <MenuList id="split-button-menu">
-                                                    {options.map(
+                                                    {locations.map(
                                                         (option, index) => (
                                                             <MenuItem
-                                                                key={option}
+                                                                key={option.id}
                                                                 selected={
                                                                     index ===
-                                                                    selectedIndex
+                                                                    selectedLocation
                                                                 }
                                                                 onClick={(
                                                                     event
@@ -200,7 +199,7 @@ export default function InputSelector() {
                                                                     )
                                                                 }
                                                             >
-                                                                {option}
+                                                                {`${option.city}, ${option.state}`}
                                                             </MenuItem>
                                                         )
                                                     )}

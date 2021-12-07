@@ -1,5 +1,8 @@
 import { Box } from '@mui/material';
 import { styled } from '@mui/system';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const dataOutput = `
 Start: Sun Dec  5 00:38:59 2021
@@ -22,6 +25,47 @@ const Terminal = styled('pre')({
 });
 
 export default function Output() {
+    const [output, setOutput] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        const getData = async () => {
+            setLoading(true);
+            await axios
+                .post('http://127.0.0.1:3000/mtr4', {
+                    host: 'google.com',
+                })
+                .then((response) => {
+                    console.log(response);
+                    setLoading(false);
+                    setOutput(response.data.data);
+                });
+        };
+
+        getData();
+    }, []);
+
+    const loadingSpinner = () => {
+        return (
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: 200,
+                    width: '100%',
+                }}
+            >
+                <CircularProgress
+                    sx={{ color: 'white' }}
+                    thickness={3}
+                    size={60}
+                />
+            </Box>
+        );
+    };
+
     return (
         <Box
             sx={{
@@ -35,7 +79,8 @@ export default function Output() {
                 alignContent: 'center',
             }}
         >
-            <Terminal>{dataOutput}</Terminal>
+            {!loading && <Terminal>{output}</Terminal>}
+            {loading && loadingSpinner()}
         </Box>
     );
 }
