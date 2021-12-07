@@ -29,7 +29,7 @@ export default function Output() {
                 height: '100%',
                 backgroundColor: 'black',
                 padding: 1,
-                borderRadius: 2,
+                borderRadius: '0px 0px 12px 12px',
                 display: 'flex',
                 alignItems: 'center',
                 alignContent: 'center',
