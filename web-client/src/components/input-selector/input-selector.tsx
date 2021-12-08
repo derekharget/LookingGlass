@@ -16,7 +16,7 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import React from 'react';
+import React, { FormEvent } from 'react';
 import getUsersIPFN from '../../helpers/get-users-ip';
 import locations from '../../locations';
 
@@ -29,10 +29,24 @@ const InputContainer = styled('div')({
     borderRadius: '12px 12px 0px 0px',
 });
 
-export default function InputSelector() {
+interface inputInterface {
+    formSubmit: (
+        // eslint-disable-next-line no-unused-vars
+        hostInput: string,
+        // eslint-disable-next-line no-unused-vars
+        ipType: string,
+        // eslint-disable-next-line no-unused-vars
+        lookupType: string,
+        // eslint-disable-next-line no-unused-vars
+        selectedLocation: number
+    ) => Promise<void>;
+}
+
+export default function InputSelector({ formSubmit }: inputInterface) {
     // User Selector types
     const [ipType, setIPType] = React.useState<string>('ipv4');
     const [lookupType, setLookupType] = React.useState<string>('ping');
+    const [hostInput, setHostInput] = React.useState<string>('');
 
     // User IP Address Type
     const [userIP, setUsersIP] = React.useState<string>('');
@@ -87,6 +101,14 @@ export default function InputSelector() {
         setOpen(false);
     };
 
+    // Send data to other component
+
+    const onSubmitHandler = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+
+        formSubmit(hostInput, ipType, lookupType, selectedLocation);
+    };
+
     return (
         <InputContainer>
             <List component="nav" aria-label="mailbox folders">
@@ -98,6 +120,8 @@ export default function InputSelector() {
                         label="IP/Host"
                         variant="outlined"
                         size="small"
+                        value={hostInput}
+                        onChange={(e) => setHostInput(e.target.value)}
                     />
                 </ListItem>
                 <Divider textAlign="left">Settings</Divider>
@@ -210,9 +234,12 @@ export default function InputSelector() {
                                 )}
                             </Popper>
                         </div>
-
                         <div>
-                            <Button variant="contained" sx={{ width: 100 }}>
+                            <Button
+                                variant="contained"
+                                sx={{ width: 100 }}
+                                onClick={onSubmitHandler}
+                            >
                                 Test
                             </Button>
                         </div>
