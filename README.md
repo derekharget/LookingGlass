@@ -1,6 +1,6 @@
 # LookingGlass
 
-Opensource looking glass that contains a web client, and individual entry points for your server.
+Opensource looking glass that contains a web client, and individual entry points for your infrastructure.
 
 Supports IPv4/IPv6 and Ping/Traceroute/MTR. Users have the ability to select locations via a dropdown menu.
 
